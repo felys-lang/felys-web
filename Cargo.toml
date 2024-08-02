@@ -1,0 +1,12 @@
+[package]
+name = "felys-web"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "felys"
+crate-type = ["cdylib"]
+
+[dependencies]
+felys = "0.1.4"
+wasm-bindgen = "0.2.92"
