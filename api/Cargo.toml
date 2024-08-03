@@ -1,0 +1,11 @@
+[package]
+name = "api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+felys = "0.1.4"
+tokio = { version = "1.38.1", features = ["full"] }
+serde = { version = "1.0.204", features = ["derive"] }
+tower = { version = "0.4.13", features = ["limit", "buffer"] }
+axum = "0.7.5"
