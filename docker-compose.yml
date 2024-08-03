@@ -1,17 +1,26 @@
 services:
+  web:
+    build: web
+    container_name: web
+    restart: always
+    networks:
+      - reverse-proxy
+
   api:
     build: api
     container_name: api
     restart: always
+    deploy:
+      replicas: 2
     networks:
-      - network
+      - reverse-proxy
 
   nginx:
     build: nginx
     container_name: nginx
     restart: always
     environment:
-      - HOST=api.felys.dev
+      - HOST=exec.felys.dev
     ports:
       - 443:443
     networks:
