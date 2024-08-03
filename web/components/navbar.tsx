@@ -1,7 +1,32 @@
+import { Output } from "@/app/page";
 import Image from "next/image";
 import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 
-const Navbar = () => {
+interface Props {
+  code: string;
+  setOutput: Dispatch<SetStateAction<Output | undefined>>;
+}
+
+const executeCode = async (
+  code: string,
+  setOutput: Dispatch<SetStateAction<Output | undefined>>
+) => {
+  const response = await fetch("http://localhost:8000/execute", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ body: code, lang: "en" }),
+  });
+
+  if (response.ok) {
+    const result: Output = await response.json();
+    setOutput(result);
+  } else {
+    setOutput(undefined);
+  }
+};
+
+const Navbar = ({ code, setOutput }: Props) => {
   return (
     <nav className="p-2 px-6">
       <ul className="flex justify-between">
@@ -10,11 +35,18 @@ const Navbar = () => {
             <Link href="/">Felys Playground</Link>
           </h1>
           <h1 className="text-white">
-            <Link href="/">Docs</Link>
+            <Link href="https://github.com/felys-lang/felys" target="_blank">
+              GitHub
+            </Link>
+          </h1>
+          <h1 className="text-white">
+            <Link href="https://felys.dev" target="_blank">
+              Docs
+            </Link>
           </h1>
         </li>
         <li className="flex items-center">
-          <button>
+          <button onClick={() => executeCode(code, setOutput)}>
             <Image src="/exec.svg" alt="EXEC" width={28} height={28} />
           </button>
         </li>
