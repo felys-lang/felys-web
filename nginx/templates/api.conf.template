@@ -1,0 +1,35 @@
+upstream api {
+    server api:8000;
+}
+
+
+server {
+    listen 443 ssl;
+
+    ssl_certificate     /etc/ssl/certs/felys.dev.pem;
+    ssl_certificate_key /etc/ssl/certs/felys.dev.key;
+
+    server_name ${HOST};
+
+    location /api/ {
+        proxy_pass http://api/;
+    }
+}
+
+
+server {
+    listen 443 default_server;
+
+    ssl_reject_handshake on;
+
+    server_name _;
+    return 444;
+}
+
+
+server {
+    listen 80 default_server;
+
+    server_name _;
+    return 444;
+}
