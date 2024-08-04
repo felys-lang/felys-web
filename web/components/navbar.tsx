@@ -12,7 +12,7 @@ const executeCode = async (
   code: string,
   setOutput: Dispatch<SetStateAction<Output | undefined>>
 ) => {
-  const response = await fetch("http://localhost:8000/execute", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}/execute`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ body: code, lang: "en" }),

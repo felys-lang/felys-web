@@ -1,4 +1,4 @@
-import { example } from "@/app/page";
+import { example } from "@/constant/code";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import { Dispatch, SetStateAction } from "react";

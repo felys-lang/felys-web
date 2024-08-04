@@ -3,23 +3,8 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Result from "@/components/result";
 import VSEditor from "@/components/vseditor";
+import { example } from "@/constant/code";
 import { useState } from "react";
-
-export const example = `print("Language for", __elysia__);
-
-heaviside = |x| {
-    if x < 0 {
-        return 0;
-    } elif x == 0 {
-        return 0.5;
-    } else {
-        return 1;
-    }
-};
-
-result = heaviside(0);
-print(result);
-`;
 
 export type Output = {
   out: string;
