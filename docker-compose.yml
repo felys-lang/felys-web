@@ -3,7 +3,7 @@ services:
     build:
       context: web
       args:
-        NEXT_PUBLIC_API: https://localhost/api
+        NEXT_PUBLIC_API: https://exec.felys.dev/api
     container_name: felys-interface
     restart: always
     networks:
@@ -23,7 +23,7 @@ services:
     container_name: felys-nginx
     restart: always
     environment:
-      - HOST=localhost
+      - HOST=exec.felys.dev
     ports:
       - 443:443
     networks:
