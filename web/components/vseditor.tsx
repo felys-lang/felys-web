@@ -11,6 +11,7 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     tokenizer: {
       root: [
         [/[a-z_$][\w$]*(?=\s*\()/, "function.call"],
+        [/__elysia__/, 'elysia'],
         [
           /[a-z_$][\w$]*/,
           {
@@ -36,6 +37,7 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
     base: "vs-dark",
     inherit: true,
     rules: [
+      { token: "elysia", foreground: "#ffc6f5" },
       { token: "identifier", foreground: "#9cdcfe" },
       { token: "function.call", foreground: "#dcdcaa" },
     ],

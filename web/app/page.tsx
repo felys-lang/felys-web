@@ -5,7 +5,7 @@ import Result from "@/components/result";
 import VSEditor from "@/components/vseditor";
 import { useState } from "react";
 
-export const example = `print(__author__);
+export const example = `print("Language for", __elysia__);
 
 heaviside = |x| {
     if x < 0 {
