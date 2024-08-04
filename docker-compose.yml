@@ -4,6 +4,7 @@ services:
       context: web
       args:
         NEXT_PUBLIC_API: https://localhost/api
+    image: felysneko/felys-web:latest
     container_name: felys-interface
     restart: always
     networks:
@@ -12,6 +13,7 @@ services:
 
   api:
     build: api
+    image: felysneko/felys-api:latest
     restart: always
     deploy:
       replicas: 2
@@ -20,6 +22,7 @@ services:
 
   nginx:
     build: nginx
+    image: felysneko/felys-nginx:latest
     container_name: felys-nginx
     restart: always
     environment:
