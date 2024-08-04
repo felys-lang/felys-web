@@ -1,4 +1,3 @@
-import { EN, ZH } from "@/constant/code";
 import { choose } from "@/utils/helper";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
@@ -76,12 +75,21 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
 
 interface Props {
   lang: string;
-  setCode: Dispatch<SetStateAction<string>>;
+  code: {
+    EN: string;
+    ZH: string;
+  };
+  setCode: Dispatch<
+    SetStateAction<{
+      EN: string;
+      ZH: string;
+    }>
+  >;
 }
 
-const VSEditor = ({ lang, setCode }: Props) => {
+const VSEditor = ({ lang, code, setCode }: Props) => {
   return (
-    <main className="h-[calc(100vh-80px)]">
+    <main className="h-[calc(100vh-84px)]">
       <Editor
         loading={<div className="loader" />}
         options={{
@@ -93,11 +101,12 @@ const VSEditor = ({ lang, setCode }: Props) => {
           },
         }}
         defaultLanguage="felys"
-        defaultValue={EN}
-        value={choose(lang, EN, ZH)}
+        value={choose(lang, code.EN, code.ZH)}
         onMount={config}
         onChange={(c) => {
-          setCode(c || "");
+          lang === "en"
+            ? setCode({ EN: c || "", ZH: code.ZH })
+            : setCode({ EN: code.EN, ZH: c || "" });
         }}
       />
     </main>

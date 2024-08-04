@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import Result from "@/components/result";
 import VSEditor from "@/components/vseditor";
-import { EN } from "@/constant/code";
+import { EN, ZH } from "@/constant/code";
 import { useState } from "react";
 
 export type Output = {
@@ -14,19 +14,13 @@ export type Output = {
 
 const Home = () => {
   const [lang, setLang] = useState("en");
-  const [code, setCode] = useState(EN);
+  const [code, setCode] = useState({ EN, ZH });
   const [output, setOutput] = useState<undefined | Output>(undefined);
 
   return (
     <>
-      <Navbar
-        code={code}
-        setOutput={setOutput}
-        lang={lang}
-        setLang={setLang}
-        setCode={setCode}
-      />
-      <VSEditor lang={lang} setCode={setCode} />
+      <Navbar code={code} setOutput={setOutput} lang={lang} setLang={setLang} />
+      <VSEditor lang={lang} code={code} setCode={setCode} />
       <Result lang={lang} output={output} setOutput={setOutput} />
       <Footer />
     </>

@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   lang: string;
-  output: undefined | Output;
+  output: Output | undefined;
   setOutput: Dispatch<SetStateAction<Output | undefined>>;
 }
 
@@ -32,11 +32,7 @@ const Result = ({ lang, output, setOutput }: Props) => {
 
       {output?.ok && (
         <div className="text-vpwhite whitespace-pre-wrap">
-          <code>{`${choose(
-            lang,
-            "Finished with exit object",
-            "完成运行返回值为"
-          )} <${output?.msg}>`}</code>
+          <code>{`Finished with exit object <${output?.msg}>`}</code>
         </div>
       )}
 

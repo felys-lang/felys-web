@@ -1,16 +1,17 @@
 import { Output } from "@/app/page";
-import { EN, ZH } from "@/constant/code";
 import { choose } from "@/utils/helper";
 import Image from "next/image";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  code: string;
+  code: {
+    EN: string;
+    ZH: string;
+  };
   setOutput: Dispatch<SetStateAction<Output | undefined>>;
   lang: string;
   setLang: Dispatch<SetStateAction<string>>;
-  setCode: Dispatch<SetStateAction<string>>;
 }
 
 const executeCode = async (
@@ -32,9 +33,9 @@ const executeCode = async (
   }
 };
 
-const Navbar = ({ code, setOutput, lang, setLang, setCode }: Props) => {
+const Navbar = ({ code, setOutput, lang, setLang }: Props) => {
   return (
-    <nav className="p-2 px-6">
+    <nav className="p-2 px-6 mb-1">
       <ul className="flex justify-between">
         <li className="flex items-center space-x-5">
           <h1 className="text-elypink text-lg font-medium">
@@ -55,15 +56,24 @@ const Navbar = ({ code, setOutput, lang, setLang, setCode }: Props) => {
         </li>
         <li className="flex items-center space-x-3">
           <button
-            className="text-elypink"
+            className="text-white"
             onClick={() => {
               setLang(choose(lang, "zh", "en"));
-              setCode(choose(lang, ZH, EN));
             }}
           >
-            {lang.toUpperCase()}
+            <span className={`text-${choose(lang, "elypink", "vpwhite")}`}>
+              EN
+            </span>
+            {" | "}
+            <span className={`text-${choose(lang, "vpwhite", "elypink")}`}>
+              中
+            </span>
           </button>
-          <button onClick={() => executeCode(code, lang, setOutput)}>
+          <button
+            onClick={() =>
+              executeCode(choose(lang, code.EN, code.ZH), lang, setOutput)
+            }
+          >
             <Image src="/exec.svg" alt="EXEC" width={28} height={28} />
           </button>
         </li>
