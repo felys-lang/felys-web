@@ -11,7 +11,7 @@ const Result = ({ output, setOutput }: Props) => {
   return (
     <dialog
       open={output !== undefined}
-      className="absolute bg-vpgray bottom-0 p-4 w-full border-t-2 border-vpwhite"
+      className="fixed bg-vpgray bottom-0 p-4 w-full border-t-2 border-vpwhite"
     >
       <div className="flex justify-between items-center">
         <code className="text-vpwhite">Felys-Web 0.1.0</code>
