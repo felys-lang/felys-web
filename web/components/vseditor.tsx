@@ -1,4 +1,5 @@
-import { example } from "@/constant/code";
+import { EN, ZH } from "@/constant/code";
+import { choose } from "@/utils/helper";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import { Dispatch, SetStateAction } from "react";
@@ -7,13 +8,28 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
   monaco.languages.register({ id: "felys" });
 
   monaco.languages.setMonarchTokensProvider("felys", {
-    keywords: ["if", "elif", "else", "while", "return"],
+    keywords: [
+      "if",
+      "elif",
+      "else",
+      "while",
+      "return",
+      "如果",
+      "否如",
+      "否则",
+      "循环",
+      "返回",
+    ],
     tokenizer: {
       root: [
-        [/[a-z_$][\w$]*(?=\s*\()/, "function.call"],
-        [/__elysia__/, 'elysia'],
+        [/[a-zA-Z_][\w_]*(?=\s*\()/, "function.call"],
+        [/[_\u4e00-\u9fa5]+(?=\s*（)/, "function.call"],
+
+        [/__elysia__/, "elysia"],
+        [/——爱莉希雅——/, "elysia"],
+
         [
-          /[a-z_$][\w$]*/,
+          /[a-zA-Z_][\w_]*/,
           {
             cases: {
               "@keywords": "keyword",
@@ -21,13 +37,22 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
             },
           },
         ],
+        [
+          /[_\u4e00-\u9fa5]+/,
+          {
+            cases: {
+              "@keywords": "keyword",
+              "@default": "identifier",
+            },
+          },
+        ],
+
         [/\d+/, "number"],
         [/"/, "string", "@string"],
-        [/[;,.]/, "delimiter"],
+        [/“.*?”/, "string"],
       ],
       string: [
-        [/[^\\"]+/, "string"],
-        [/\\./, "string.escape.invalid"],
+        [/[^"]+/, "string"],
         [/"/, "string", "@pop"],
       ],
     },
@@ -50,10 +75,11 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
 };
 
 interface Props {
+  lang: string;
   setCode: Dispatch<SetStateAction<string>>;
 }
 
-const VSEditor = ({ setCode }: Props) => {
+const VSEditor = ({ lang, setCode }: Props) => {
   return (
     <main className="h-[calc(100vh-80px)]">
       <Editor
@@ -62,9 +88,13 @@ const VSEditor = ({ setCode }: Props) => {
           fontSize: 16,
           scrollBeyondLastLine: false,
           scrollbar: { horizontal: "hidden" },
+          unicodeHighlight: {
+            ambiguousCharacters: false,
+          },
         }}
         defaultLanguage="felys"
-        defaultValue={example}
+        defaultValue={EN}
+        value={choose(lang, EN, ZH)}
         onMount={config}
         onChange={(c) => {
           setCode(c || "");

@@ -1,13 +1,15 @@
 import { Output } from "@/app/page";
+import { choose } from "@/utils/helper";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
+  lang: string;
   output: undefined | Output;
   setOutput: Dispatch<SetStateAction<Output | undefined>>;
 }
 
-const Result = ({ output, setOutput }: Props) => {
+const Result = ({ lang, output, setOutput }: Props) => {
   return (
     <dialog
       open={output !== undefined}
@@ -30,7 +32,11 @@ const Result = ({ output, setOutput }: Props) => {
 
       {output?.ok && (
         <div className="text-vpwhite whitespace-pre-wrap">
-          <code>{`Finished with exit object <${output?.msg}>`}</code>
+          <code>{`${choose(
+            lang,
+            "Finished with exit object",
+            "完成运行返回值为"
+          )} <${output?.msg}>`}</code>
         </div>
       )}
 
