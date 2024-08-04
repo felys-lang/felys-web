@@ -1,0 +1,29 @@
+services:
+  web:
+    build:
+      context: ../web
+      args:
+        NEXT_PUBLIC_API: https://localhost/api
+    restart: always
+    networks:
+      - reverse-proxy
+
+  api:
+    build: ../api
+    restart: always
+    networks:
+      - reverse-proxy
+
+  nginx:
+    build: ../nginx
+    restart: always
+    environment:
+      - HOST=localhost
+    ports:
+      - 443:443
+    networks:
+      - reverse-proxy
+
+networks:
+  reverse-proxy:
+    name: reverse-proxy
