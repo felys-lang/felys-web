@@ -1,7 +1,7 @@
 import { example } from "@/app/page";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
   monaco.languages.register({ id: "felys" });
