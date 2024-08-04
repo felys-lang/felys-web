@@ -16,13 +16,13 @@ const executeCode = async (
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ body: code, lang: "en" }),
-  });
+  }).catch((e) => console.log(e));
 
-  if (response.ok) {
+  if (response && response.ok) {
     const result: Output = await response.json();
     setOutput(result);
   } else {
-    setOutput(undefined);
+    setOutput({ out: "", msg: "Internal Server Error", ok: false });
   }
 };
 

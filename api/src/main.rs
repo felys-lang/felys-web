@@ -19,7 +19,7 @@ async fn main() {
         .allow_origin(Any);
     
     let app = Router::new()
-        .route("/", get(|| async { "Felys Web API" }))
+        .route("/", get(|| async { "Felys-Web API" }))
         .route("/execute", post(execute))
         .layer(cors);
 
