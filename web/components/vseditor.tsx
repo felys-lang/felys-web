@@ -7,44 +7,18 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
   monaco.languages.register({ id: "felys" });
 
   monaco.languages.setMonarchTokensProvider("felys", {
-    keywords: [
-      "if",
-      "elif",
-      "else",
-      "while",
-      "return",
-      "如果",
-      "否如",
-      "否则",
-      "循环",
-      "返回",
-    ],
     tokenizer: {
       root: [
+        [/if|elif|else|while|return|true|false|none|and|or|xor/, "keyword"],
+        [/如果|否如|否则|循环|返回|真|假|无|和|或|异或|大于|小于|等于|大于等于|小于等于|不等于/, "keyword"],
+
         [/[a-zA-Z_][\w_]*(?=\s*\()/, "function.call"],
-        [/[_\u4e00-\u9fa5]+(?=\s*（)/, "function.call"],
+        [/[_\u4e00-\u9fa5][\d_\u4e00-\u9fa5]*(?=\s*（)/, "function.call"],
 
-        [/__elysia__/, "elysia"],
-        [/——爱莉希雅——/, "elysia"],
+        [/__elysia__|——爱莉希雅——/, "elysia"],
 
-        [
-          /[a-zA-Z_][\w_]*/,
-          {
-            cases: {
-              "@keywords": "keyword",
-              "@default": "identifier",
-            },
-          },
-        ],
-        [
-          /[_\u4e00-\u9fa5]+/,
-          {
-            cases: {
-              "@keywords": "keyword",
-              "@default": "identifier",
-            },
-          },
-        ],
+        [/[a-zA-Z_][\w_]*/, "identifier"],
+        [/[_\u4e00-\u9fa5][\d_\u4e00-\u9fa5]*/, "identifier"],
 
         [/\d+/, "number"],
         [/"/, "string", "@string"],
