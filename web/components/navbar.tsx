@@ -28,7 +28,7 @@ const executeCode = async (
     const result: Output = await response.json();
     setOutput(result);
   } else {
-    setOutput({ out: "", msg: "Internal Server Error", ok: false });
+    setOutput({ time: "", out: "", msg: "Internal Server Error", ok: false });
   }
 };
 

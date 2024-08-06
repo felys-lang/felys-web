@@ -29,7 +29,7 @@ const Result = ({ output, setOutput }: Props) => {
 
       {output?.ok && (
         <div className="text-vpwhite whitespace-pre-wrap">
-          <code>{`Finished with exit object <${output?.msg}>`}</code>
+          <code>{`Finished with <${output?.msg}> in ${output?.time}`}</code>
         </div>
       )}
 

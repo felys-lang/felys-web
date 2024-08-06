@@ -1,12 +1,13 @@
 use std::str::FromStr;
 
-use axum::http::Method;
 use axum::{Json, Router};
+use axum::http::Method;
 use axum::routing::{get, post};
 use felys::{Language, Worker};
 use serde::{Deserialize, Serialize};
 use tokio::net::TcpListener;
 use tower_http::cors::{Any, CorsLayer};
+
 use crate::rsffi::register;
 
 mod rsffi;
@@ -17,7 +18,7 @@ async fn main() {
         .allow_headers(Any)
         .allow_methods([Method::GET, Method::POST])
         .allow_origin(Any);
-    
+
     let app = Router::new()
         .route("/", get(|| async { "Felys-Web API" }))
         .route("/execute", post(execute))
@@ -32,14 +33,16 @@ async fn execute(Json(payload): Json<Code>) -> Json<Report> {
         .unwrap_or(Language::EN);
 
     let mixin = register(&lang);
-    let mut main = Worker::new(mixin, 0.05, lang);
+    let mut main = Worker::new(mixin, 0.05, 100, lang);
     let report = match main.exec(payload.body) {
         Ok(s) => Report {
+            time: format!("{:?}", s.time.0 + s.time.1 + s.time.2),
             out: s.stdout,
             msg: s.exit.to_string(),
             ok: true,
         },
         Err(e) => Report {
+            time: String::from(""),
             out: String::new(),
             msg: e.to_string(),
             ok: false,
@@ -56,6 +59,7 @@ struct Code {
 
 #[derive(Serialize)]
 struct Report {
+    time: String,
     out: String,
     msg: String,
     ok: bool,

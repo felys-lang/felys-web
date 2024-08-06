@@ -7,6 +7,7 @@ import { EN, ZH } from "@/constant/code";
 import { useState } from "react";
 
 export type Output = {
+  time: string;
   out: string;
   msg: string;
   ok: boolean;
