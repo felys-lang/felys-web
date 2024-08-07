@@ -47,17 +47,17 @@ const Navbar = ({ code, setOutput, lang, setLang }: Props) => {
               <MoreIcon />
             </button>
             <Link href="/" className="text-elypink text-lg font-medium">
-              {choose(lang, "Felys Playground", "FELYS在线运行")}
+              Felys Playground
             </Link>
           </h1>
           <h1 className="text-white hidden sm:block">
             <Link href="https://github.com/felys-lang/felys" target="_blank">
-              {choose(lang, "GitHub", "源码")}
+              GitHub
             </Link>
           </h1>
           <h1 className="text-white hidden sm:block">
             <Link href="https://felys.dev" target="_blank">
-              {choose(lang, "Docs", "文档")}
+              Docs
             </Link>
           </h1>
         </li>
@@ -90,12 +90,12 @@ const Navbar = ({ code, setOutput, lang, setLang }: Props) => {
           <div className="flex items-center space-x-3">
             <h1 className="text-white">
               <Link href="https://github.com/felys-lang/felys" target="_blank">
-                {choose(lang, "GitHub", "源码")}
+                GitHub
               </Link>
             </h1>
             <h1 className="text-white">
               <Link href="https://felys.dev" target="_blank">
-                {choose(lang, "Docs", "文档")}
+                Docs
               </Link>
             </h1>
           </div>

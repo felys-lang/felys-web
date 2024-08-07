@@ -23,7 +23,7 @@ const Home = () => {
       <Navbar code={code} setOutput={setOutput} lang={lang} setLang={setLang} />
       <VSEditor lang={lang} code={code} setCode={setCode} />
       <Result output={output} setOutput={setOutput} />
-      <Footer lang={lang}/>
+      <Footer/>
     </>
   );
 };
