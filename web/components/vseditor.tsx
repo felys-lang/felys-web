@@ -63,7 +63,7 @@ interface Props {
 
 const VSEditor = ({ lang, code, setCode }: Props) => {
   return (
-    <main className="h-[calc(100vh-80px)]">
+    <main className="h-[calc(100vh-84px)]">
       <Editor
         loading={<div className="loader" />}
         options={{
