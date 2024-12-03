@@ -1,4 +1,3 @@
-import { choose } from "@/utils/helper";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 import { Dispatch, SetStateAction } from "react";
@@ -9,16 +8,14 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
   monaco.languages.setMonarchTokensProvider("felys", {
     tokenizer: {
       root: [
-        [/if|elif|else|while|return|true|false|none|and|or|xor/, "keyword"],
-        [/如果|否如|否则|当|返回|真|假|无|和|或|异或|大于|小于|等于|大于等于|小于等于|不等于/, "keyword"],
-
+        [
+          /if|else|while|break|continue|loop|return|true|false|none|and|or(?!\w)/,
+          "keyword",
+        ],
         [/[a-zA-Z_][\w_]*(?=\s*\()/, "function.call"],
-        [/[_\u4e00-\u9fa5][\d_\u4e00-\u9fa5]*(?=\s*（)/, "function.call"],
-
-        [/__elysia__|——爱莉希雅——/, "elysia"],
+        [/__elysia__/, "elysia"],
 
         [/[a-zA-Z_][\w_]*/, "identifier"],
-        [/[_\u4e00-\u9fa5][\d_\u4e00-\u9fa5]*/, "identifier"],
 
         [/\d+/, "number"],
         [/"/, "string", "@string"],
@@ -48,20 +45,11 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
 };
 
 interface Props {
-  lang: string;
-  code: {
-    EN: string;
-    ZH: string;
-  };
-  setCode: Dispatch<
-    SetStateAction<{
-      EN: string;
-      ZH: string;
-    }>
-  >;
+  code: string;
+  setCode: Dispatch<SetStateAction<string>>;
 }
 
-const VSEditor = ({ lang, code, setCode }: Props) => {
+const VSEditor = ({ code, setCode }: Props) => {
   return (
     <main className="h-[calc(100vh-84px)]">
       <Editor
@@ -75,13 +63,9 @@ const VSEditor = ({ lang, code, setCode }: Props) => {
           },
         }}
         defaultLanguage="felys"
-        value={choose(lang, code.EN, code.ZH)}
+        value={code}
         onMount={config}
-        onChange={(c) => {
-          lang === "en"
-            ? setCode({ EN: c || "", ZH: code.ZH })
-            : setCode({ EN: code.EN, ZH: c || "" });
-        }}
+        onChange={(c) => setCode(c || "")}
       />
     </main>
   );

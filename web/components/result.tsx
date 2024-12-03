@@ -13,27 +13,17 @@ const Result = ({ output, setOutput }: Props) => {
       className="fixed bg-vpgray bottom-0 p-4 w-full border-t-2 border-vpwhite max-h-[40%] overflow-auto"
     >
       <div className="flex justify-between items-center">
-        <code className="text-vpwhite">Felys-Web 0.1.0</code>
+        <code className="text-vpwhite">Felys-Web 0.2.0</code>
         <button onClick={() => setOutput(undefined)}>
           <CloseIcon />
         </button>
       </div>
 
-      {output?.ok && output?.out && (
-        <div className="text-elypink whitespace-pre-wrap overflow-auto">
-          <code>{output?.out}</code>
-        </div>
-      )}
-
       <br />
 
-      {output?.ok && (
-        <div className="text-vpwhite whitespace-pre-wrap">
-          <code>{`Finished with <${output?.msg}> in ${output?.time}`}</code>
-        </div>
-      )}
-
-      {!output?.ok && <code className="text-vpwhite">{output?.msg}</code>}
+      <div className="text-vpwhite whitespace-pre-wrap">
+        <code>{`Finished with [${output?.result}] in ${output?.elapsed}`}</code>
+      </div>
     </dialog>
   );
 };

@@ -1,16 +1,10 @@
-use std::str::FromStr;
-
-use axum::{Json, Router};
 use axum::http::Method;
 use axum::routing::{get, post};
-use felys::{Language, Worker};
-use serde::{Deserialize, Serialize};
+use axum::{Json, Router};
+use serde::Serialize;
+use std::time::Instant;
 use tokio::net::TcpListener;
 use tower_http::cors::{Any, CorsLayer};
-
-use crate::rsffi::register;
-
-mod rsffi;
 
 #[tokio::main]
 async fn main() {
@@ -28,39 +22,27 @@ async fn main() {
     axum::serve(listener, app).await.unwrap();
 }
 
-async fn execute(Json(payload): Json<Code>) -> Json<Report> {
-    let lang = Language::from_str(payload.lang.as_str())
-        .unwrap_or(Language::EN);
-
-    let mixin = register(&lang);
-    let mut main = Worker::new(mixin, 0.05, 100, lang);
-    let report = match main.exec(payload.body) {
-        Ok(s) => Report {
-            time: format!("{:?}", s.time.0 + s.time.1 + s.time.2),
-            out: s.stdout,
-            msg: s.exit.to_string(),
-            ok: true,
-        },
-        Err(e) => Report {
-            time: String::from(""),
-            out: String::new(),
-            msg: e.to_string(),
-            ok: false,
-        }
+async fn execute(code: String) -> Json<Report> {
+    let start = Instant::now();
+    let (prog, pool) = match felys::parse(code) {
+        Ok(x) => x,
+        Err(_) => return Report::new(start, "syntax error".to_string()).into()
     };
-    Json(report)
-}
-
-#[derive(Deserialize)]
-struct Code {
-    body: String,
-    lang: String,
+    let value = match felys::exec(prog, pool, 100, 100) {
+        Ok(x) => x,
+        Err(e) => return Report::new(start, e.to_string()).into()
+    };
+    Report::new(start, value.to_string()).into()
 }
 
 #[derive(Serialize)]
 struct Report {
-    time: String,
-    out: String,
-    msg: String,
-    ok: bool,
+    elapsed: String,
+    result: String,
+}
+
+impl Report {
+    fn new(start: Instant, result: String) -> Self {
+        Self { elapsed: format!("{:?}", start.elapsed()), result }
+    }
 }

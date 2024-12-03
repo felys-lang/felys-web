@@ -1,38 +1,30 @@
 import { Output } from "@/app/page";
-import { choose } from "@/utils/helper";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface Props {
-  code: {
-    EN: string;
-    ZH: string;
-  };
+  code: string;
   setOutput: Dispatch<SetStateAction<Output | undefined>>;
-  lang: string;
-  setLang: Dispatch<SetStateAction<string>>;
 }
 
 const executeCode = async (
   code: string,
-  lang: string,
   setOutput: Dispatch<SetStateAction<Output | undefined>>
 ) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API}/execute`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ body: code, lang }),
+    body: code,
   }).catch((e) => console.log(e));
 
   if (response && response.ok) {
     const result: Output = await response.json();
     setOutput(result);
   } else {
-    setOutput({ time: "", out: "", msg: "Internal Server Error", ok: false });
+    setOutput({ elapsed: "", result: "Internal Server Error" });
   }
 };
 
-const Navbar = ({ code, setOutput, lang, setLang }: Props) => {
+const Navbar = ({ code, setOutput }: Props) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -62,25 +54,7 @@ const Navbar = ({ code, setOutput, lang, setLang }: Props) => {
           </h1>
         </li>
         <li className="flex items-center space-x-3">
-          <button
-            className="text-white"
-            onClick={() => {
-              setLang(choose(lang, "zh", "en"));
-            }}
-          >
-            <span className={`text-${choose(lang, "elypink", "vpwhite")}`}>
-              EN
-            </span>
-            {" | "}
-            <span className={`text-${choose(lang, "vpwhite", "elypink")}`}>
-              中
-            </span>
-          </button>
-          <button
-            onClick={() =>
-              executeCode(choose(lang, code.EN, code.ZH), lang, setOutput)
-            }
-          >
+          <button onClick={() => executeCode(code, setOutput)}>
             <ExecIcon />
           </button>
         </li>
