@@ -7,5 +7,5 @@ edition = "2021"
 felys = { git = "https://github.com/felys-lang/felys" }
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1", features = ["derive"] }
-tower-http = { version = "0.5", features = ["cors"] }
-axum = "0.7"
+tower-http = { version = "0.6", features = ["cors"] }
+axum = "0.8"

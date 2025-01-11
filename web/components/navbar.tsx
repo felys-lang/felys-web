@@ -1,6 +1,6 @@
 import { Output } from "@/app/page";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   code: string;
@@ -20,34 +20,26 @@ const executeCode = async (
     const result: Output = await response.json();
     setOutput(result);
   } else {
-    setOutput({ elapsed: "", result: "Internal Server Error" });
+    setOutput({ elapsed: "N/A", result: "Internal Server Error" });
   }
 };
 
 const Navbar = ({ code, setOutput }: Props) => {
-  const [collapse, setCollapse] = useState(false);
-
   return (
     <nav className="p-2 px-6 mb-1">
       <ul className="flex justify-between">
         <li className="flex items-center space-x-5">
           <h1 className="flex items-center">
-            <button
-              className="sm:hidden me-2"
-              onClick={() => setCollapse((c) => !c)}
-            >
-              <MoreIcon />
-            </button>
             <Link href="/" className="text-elypink text-lg font-medium">
-              Felys Playground
+              Felys Web
             </Link>
           </h1>
-          <h1 className="text-white hidden sm:block">
+          <h1 className="text-white">
             <Link href="https://github.com/felys-lang/felys" target="_blank">
               GitHub
             </Link>
           </h1>
-          <h1 className="text-white hidden sm:block">
+          <h1 className="text-white">
             <Link href="https://felys.dev" target="_blank">
               Docs
             </Link>
@@ -59,42 +51,7 @@ const Navbar = ({ code, setOutput }: Props) => {
           </button>
         </li>
       </ul>
-      {collapse && (
-        <div className="absolute top-11 left-0 z-10 w-screen backdrop-blur-sm p-1 px-6 shadow-xl sm:hidden">
-          <div className="flex items-center space-x-3">
-            <h1 className="text-white">
-              <Link href="https://github.com/felys-lang/felys" target="_blank">
-                GitHub
-              </Link>
-            </h1>
-            <h1 className="text-white">
-              <Link href="https://felys.dev" target="_blank">
-                Docs
-              </Link>
-            </h1>
-          </div>
-        </div>
-      )}
     </nav>
-  );
-};
-
-const MoreIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="#ffffff"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        d="M4 6h16M4 12h8m-8 6h16"
-      />
-    </svg>
   );
 };
 

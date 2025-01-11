@@ -24,25 +24,27 @@ async fn main() {
 
 async fn execute(code: String) -> Json<Report> {
     let start = Instant::now();
-    let (prog, pool) = match felys::parse(code) {
-        Ok(x) => x,
-        Err(_) => return Report::new(start, "syntax error".to_string()).into()
-    };
-    let value = match felys::exec(prog, pool, 100, 100) {
-        Ok(x) => x,
-        Err(e) => return Report::new(start, e.to_string()).into()
-    };
-    Report::new(start, value.to_string()).into()
+    let result = wrapper(code);
+    let elapsed = format!("{:?}", start.elapsed());
+    let report = Report { elapsed, result };
+    report.into()
 }
+
+fn wrapper(code: String) -> String {
+    let (program, intern) = match felys::parse(code) {
+        Ok(x) => x,
+        Err(e) => return format!("syntax error: {}", e)
+    };
+    let value = match felys::exec(program, intern, 50, 100) {
+        Ok(x) => x,
+        Err(e) => return format!("runtime error: {}", e)
+    };
+    value.to_string()
+}
+
 
 #[derive(Serialize)]
 struct Report {
     elapsed: String,
     result: String,
-}
-
-impl Report {
-    fn new(start: Instant, result: String) -> Self {
-        Self { elapsed: format!("{:?}", start.elapsed()), result }
-    }
 }

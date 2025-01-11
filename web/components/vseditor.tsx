@@ -19,7 +19,6 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
 
         [/\d+/, "number"],
         [/"/, "string", "@string"],
-        [/“.*?”/, "string"],
       ],
       string: [
         [/[^"]+/, "string"],
@@ -55,6 +54,7 @@ const VSEditor = ({ code, setCode }: Props) => {
       <Editor
         loading={<div className="loader" />}
         options={{
+          lineNumbersMinChars: 3,
           fontSize: 16,
           scrollBeyondLastLine: false,
           scrollbar: { horizontal: "hidden" },
