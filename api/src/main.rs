@@ -35,7 +35,7 @@ fn wrapper(code: String) -> String {
         Ok(x) => x,
         Err(e) => return format!("syntax error: {}", e)
     };
-    let value = match felys::exec(program, intern, 50, 100) {
+    let value = match felys::exec(program, intern, 100, 100) {
         Ok(x) => x,
         Err(e) => return format!("runtime error: {}", e)
     };
