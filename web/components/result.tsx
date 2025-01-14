@@ -13,7 +13,7 @@ const Result = ({ output, setOutput }: Props) => {
       className="fixed bg-vpgray bottom-0 p-4 w-full border-t-2 border-vpwhite max-h-[40%] overflow-auto"
     >
       <div className="flex justify-between items-center">
-        <code className="text-vpwhite">Felys-Web 0.2.1</code>
+        <code className="text-vpwhite">Felys 0.2.1</code>
         <button onClick={() => setOutput(undefined)}>
           <CloseIcon />
         </button>

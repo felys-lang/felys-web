@@ -26,11 +26,11 @@ const executeCode = async (
 
 const Navbar = ({ code, setOutput }: Props) => {
   return (
-    <nav className="p-2 px-6 mb-1">
+    <nav className="py-3 px-6 mb-1">
       <ul className="flex justify-between">
         <li className="flex items-center space-x-5">
           <h1 className="flex items-center">
-            <Link href="/" className="text-elypink text-lg font-medium">
+            <Link href="/" className="text-elypink text-xl font-medium">
               Felys Web
             </Link>
           </h1>
