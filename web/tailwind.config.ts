@@ -7,4 +7,9 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   plugins: [],
+  theme: {
+    extend: {
+      colors: { elysia: "#ffc6f5" },
+    },
+  },
 } satisfies Config;
