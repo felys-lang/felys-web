@@ -77,6 +77,7 @@ export default function Workbench({ codebase, setCodebase }: Props) {
             scrollbar: { horizontal: "hidden" },
           }}
           defaultLanguage="felys"
+          loading={<div className="loader" />}
           onMount={config}
           value={codebase.code[codebase.cursor]}
           onChange={(c) =>
