@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Felys Web",
+  title: "Felys",
   description: "Online Felys code execution",
 };
 
@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="bg-vpgray" lang="en">
-      <body>{children}</body>
+    <html lang="en" className="bg-neutral-900 text-neutral-100">
+      <body className="antialiased">{children}</body>
     </html>
   );
 }

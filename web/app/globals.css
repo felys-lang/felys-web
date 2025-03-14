@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .loader {
   width: 44px;
   padding: 8px;

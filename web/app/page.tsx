@@ -1,28 +1,22 @@
 "use client";
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
-import Result from "@/components/result";
-import VSEditor from "@/components/vseditor";
-import { CODE } from "@/constant/code";
 import { useState } from "react";
+import Workbench from "@/components/workbench";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import { author, waifu } from "./samples";
 
-export type Output = {
-  elapsed: string;
-  result: string;
-};
-
-const Home = () => {
-  const [code, setCode] = useState(CODE);
-  const [output, setOutput] = useState<undefined | Output>(undefined);
+export default function Home() {
+  const [codebase, setCodebase] = useState({
+    cursor: 0,
+    name: ["waifu", "author"],
+    code: [waifu, author],
+  });
 
   return (
     <>
-      <Navbar code={code} setOutput={setOutput} />
-      <VSEditor code={code} setCode={setCode} />
-      <Result output={output} setOutput={setOutput} />
+      <Navbar codebase={codebase} setCodebase={setCodebase} />
+      <Workbench codebase={codebase} setCodebase={setCodebase} />
       <Footer />
     </>
   );
-};
-
-export default Home;
+}
