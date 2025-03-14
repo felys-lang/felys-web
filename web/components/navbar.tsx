@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { Collection, Exec } from "@/components/icons";
-import { Codebase, SetCodebase } from "./alias";
+import { CloseIcon, CollectionIcon, ExecIcon } from "@/components/icons";
+import { Codebase, Result, SetCodebase, SetResult } from "./alias";
 import { useState } from "react";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 
 export default function Navbar({ codebase, setCodebase }: Props) {
   const [modal, setModal] = useState(false);
+  const [result, setResult] = useState<Result | undefined>(undefined);
 
   return (
     <header className="flex justify-between py-4 px-4 lg:px-6 border-b-2 border-black">
@@ -33,19 +34,24 @@ export default function Navbar({ codebase, setCodebase }: Props) {
       </div>
       <div className="flex items-center space-x-4">
         <button className="lg:hidden" onClick={() => setModal((m) => !m)}>
-          <Collection />
+          <CollectionIcon />
         </button>
-        <button>
-          <Exec />
+        <button
+          onClick={() => executeCode(codebase.code[codebase.cursor], setResult)}
+        >
+          <ExecIcon />
         </button>
       </div>
       {modal && (
-        <dialog className="h-screen w-screen fixed top-0 z-10 flex justify-center items-center bg-black/50">
+        <dialog
+          open
+          className="h-screen w-screen fixed top-0 z-20 flex justify-center items-center bg-black/50"
+        >
           <ul className="max-h-[60vh] w-64 space-y-4 overflow-auto">
             {codebase.name.map((value, key) => (
-              <li key={key} className="text-lg font-bold text-neutral-100">
+              <li key={key} className="text-lg font-bold text-neutral-300">
                 <button
-                  className={`p-2 w-full border-neutral-100 border-x-2 bg-neutral-${
+                  className={`p-2 w-full border-neutral-300 border-x-2 bg-neutral-${
                     codebase.cursor === key ? "800" : "900"
                   }`}
                   onClick={() => {
@@ -60,6 +66,45 @@ export default function Navbar({ codebase, setCodebase }: Props) {
           </ul>
         </dialog>
       )}
+      {result && (
+        <dialog
+          open
+          className="max-h-[40vh] w-screen fixed bottom-0 z-10 p-4 overflow-auto text-neutral-300 bg-neutral-900 border-t-2 border-black"
+        >
+          <div className="flex justify-between items-center">
+            <code className="font-bold">Felys 0.2.1</code>
+            <button onClick={() => setResult(undefined)}>
+              <CloseIcon />
+            </button>
+          </div>
+
+          <br />
+
+          <div className="whitespace-pre-wrap">
+            <code>{result?.result}</code>
+          </div>
+
+          <br />
+
+          <div className="whitespace-pre-wrap">
+            <code>{`Finished in ${result?.elapsed}`}</code>
+          </div>
+        </dialog>
+      )}
     </header>
   );
 }
+
+const executeCode = async (code: string, setResult: SetResult) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API}/execute`, {
+    method: "POST",
+    body: code,
+  }).catch((e) => console.log(e));
+
+  if (response && response.ok) {
+    const result: Result = await response.json();
+    setResult(result);
+  } else {
+    setResult({ elapsed: "N/A", result: "Internal Server Error" });
+  }
+};
