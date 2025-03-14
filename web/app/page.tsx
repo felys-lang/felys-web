@@ -2,12 +2,14 @@
 import { useState } from "react";
 import Workbench from "@/components/workbench";
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import { author, waifu } from "./samples";
 
 export default function Home() {
   const [codebase, setCodebase] = useState({
     cursor: 0,
-    name: ["foo", "bar", "fuzz"],
-    code: ["return foo;", "return bar;", "return fuzz;"],
+    name: ["waifu", "author"],
+    code: [waifu, author],
   });
 
   return (
@@ -16,15 +18,5 @@ export default function Home() {
       <Workbench codebase={codebase} setCodebase={setCodebase} />
       <Footer />
     </>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="p-2 border-black border-t-2">
-      <p className="text-center text-sm text-neutral-300">
-        © All rights reserved by FelysNeko
-      </p>
-    </footer>
   );
 }
