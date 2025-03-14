@@ -4,16 +4,16 @@ import Workbench from "@/components/workbench";
 import Navbar from "@/components/navbar";
 
 export default function Home() {
-  const [codebase, modifier] = useState({
+  const [codebase, setCodebase] = useState({
     cursor: 0,
-    name: ["foo", "bar"],
-    code: ["return foo;", "return bar;"],
+    name: ["foo", "bar", "fuzz"],
+    code: ["return foo;", "return bar;", "return fuzz;"],
   });
 
   return (
     <>
-      <Navbar />
-      <Workbench codebase={codebase} modifier={modifier} />
+      <Navbar codebase={codebase} setCodebase={setCodebase} />
+      <Workbench codebase={codebase} setCodebase={setCodebase} />
       <Footer />
     </>
   );

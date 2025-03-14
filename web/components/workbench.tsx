@@ -1,7 +1,7 @@
 "use client";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
-import { Codebase, Modifier } from "./alias";
+import { Codebase, SetCodebase } from "./alias";
 
 const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
   monaco.languages.register({ id: "felys" });
@@ -46,19 +46,21 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
 
 interface Props {
   codebase: Codebase;
-  modifier: Modifier;
+  setCodebase: SetCodebase;
 }
 
-export default function Workbench({ codebase, modifier }: Props) {
+export default function Workbench({ codebase, setCodebase }: Props) {
   return (
     <div className="flex h-[calc(100vh-98px)] relative">
-      <div className="hidden w-1/5 lg:block border-e-2 border-black">
+      <div className="hidden w-1/5 lg:block border-e-2 border-black overflow-auto">
         <ul>
           {codebase.name.map((value, key) => (
             <li key={key}>
               <button
-                className="py-2 px-4 w-full text-start hover:bg-neutral-700"
-                onClick={() => modifier((cb) => ({ ...cb, cursor: key }))}
+                className={`py-2 px-4 w-full text-start hover:bg-neutral-800${
+                  codebase.cursor === key ? " bg-neutral-800" : ""
+                }`}
+                onClick={() => setCodebase((cb) => ({ ...cb, cursor: key }))}
               >
                 {value}.ely
               </button>
@@ -78,7 +80,7 @@ export default function Workbench({ codebase, modifier }: Props) {
           onMount={config}
           value={codebase.code[codebase.cursor]}
           onChange={(c) =>
-            modifier((cb) => {
+            setCodebase((cb) => {
               cb.code[cb.cursor] = c || "";
               return { ...cb, code: cb.code };
             })

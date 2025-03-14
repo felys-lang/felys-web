@@ -6,7 +6,7 @@ export type Codebase = {
   code: string[];
 };
 
-export type Modifier = Dispatch<
+export type SetCodebase = Dispatch<
   SetStateAction<{
     cursor: number;
     name: string[];
