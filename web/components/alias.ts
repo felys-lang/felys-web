@@ -14,3 +14,5 @@ export type Result = {
 };
 
 export type SetResult = Dispatch<SetStateAction<Result | undefined>>;
+
+export type SetModal = Dispatch<SetStateAction<boolean>>;

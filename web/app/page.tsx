@@ -3,7 +3,7 @@ import { useState } from "react";
 import Workbench from "@/components/workbench";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { author, waifu } from "./samples";
+import { author, waifu } from "@/app/samples";
 
 export default function Home() {
   const [codebase, setCodebase] = useState({
