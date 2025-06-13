@@ -9,15 +9,14 @@ const config = (_: editor.IStandaloneCodeEditor, monaco: Monaco) => {
   monaco.languages.setMonarchTokensProvider("felys", {
     tokenizer: {
       root: [
+        [/__elysia__/, "elysia"],
+        [/\/\/[^\n]*/, "comment"],
         [
-          /if|else|while|break|continue|loop|return|true|false|none|and|or(?!\w)/,
+          /if|else|while|break|continue|loop|return|true|false|not|and|or|for|in(?!\w)/,
           "keyword",
         ],
         [/[a-zA-Z_][\w_]*(?=\s*\()/, "function.call"],
-        [/__elysia__/, "elysia"],
-
         [/[a-zA-Z_][\w_]*/, "identifier"],
-
         [/\d+/, "number"],
         [/"/, "string", "@string"],
       ],
@@ -73,7 +72,6 @@ export default function Workbench({ codebase, setCodebase }: Props) {
           options={{
             lineNumbersMinChars: 3,
             fontSize: 16,
-            scrollBeyondLastLine: false,
             scrollbar: { horizontal: "hidden" },
           }}
           defaultLanguage="felys"

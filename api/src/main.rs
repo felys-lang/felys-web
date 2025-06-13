@@ -1,6 +1,7 @@
 use axum::http::Method;
 use axum::routing::{get, post};
 use axum::{Json, Router};
+use felys::Packrat;
 use serde::Serialize;
 use std::time::Instant;
 use tokio::net::TcpListener;
@@ -31,17 +32,16 @@ async fn execute(code: String) -> Json<Report> {
 }
 
 fn wrapper(code: String) -> String {
-    let (program, intern) = match felys::parse(code) {
+    let (ast, intern) = match Packrat::from(code).parse() {
         Ok(x) => x,
-        Err(e) => return format!("syntax error: {}", e)
+        Err(e) => return format!("syntax error: {}", e),
     };
-    let value = match felys::exec(program, intern, 100, 100) {
+    let value = match ast.exec(intern, 100, 100) {
         Ok(x) => x,
-        Err(e) => return format!("runtime error: {}", e)
+        Err(e) => return format!("runtime error: {}", e),
     };
     value.to_string()
 }
-
 
 #[derive(Serialize)]
 struct Report {

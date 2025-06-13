@@ -3,13 +3,13 @@ import { useState } from "react";
 import Workbench from "@/components/workbench";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
-import { author, waifu } from "@/app/samples";
+import { author, elysia, hoyoverse } from "@/app/samples";
 
 export default function Home() {
   const [codebase, setCodebase] = useState({
     cursor: 0,
-    name: ["waifu", "author"],
-    code: [waifu, author],
+    name: ["hoyoverse", "elysia", "author"],
+    code: [hoyoverse, elysia, author],
   });
 
   return (

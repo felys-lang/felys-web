@@ -13,7 +13,7 @@ export default function Terminal({ result, setResult }: Props) {
       className="max-h-[40vh] w-screen fixed bottom-0 z-10 p-4 overflow-auto text-neutral-300 bg-neutral-900 border-t-2 border-black"
     >
       <div className="flex justify-between items-center">
-        <code className="font-bold">Felys 0.2.1</code>
+        <code className="font-bold">Felys 0.3.0</code>
         <button onClick={() => setResult(undefined)}>
           <CloseIcon />
         </button>

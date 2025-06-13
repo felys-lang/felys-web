@@ -1,18 +1,43 @@
-export const waifu = `whois = |name| if name == "Acheron" {
-    "雷电·忘川守·芽衣"
-} else if name == "Elysia" {
-    "爱莉希雅"
-} else "Unknown";
-
-meet = |me, others| {
-    (first, second) = others;
-    me + ": Hi, " + first + " and " + second + "!"
+export const hoyoverse = `talk = |name, to| {
+    msg = if name == "Pardofelis" and to == "Mei" {
+        "芽衣姐，我不想死……"
+    } else if name == "Focalors" and to == "Neuvillette" {
+        "再见纳维莱特，希望你喜欢这五百年来属于你的戏份。"
+    } else if name == "Acheron" {
+        "我为逝者哀哭！"
+    } else if name == "Burnice" {
+        "BURNICE x6 GO GO!"
+    } else {
+        "Hello, " + to
+    }
+    name + ": " + msg
 }
 
-name = whois("Acheron");
-greeting = meet("FelysNeko", (__elysia__, name));
+people = [
+    ("Pardofelis", "Mei"),
+    ("Focalors", "Neuvillette"),
+    ("Acheron", "Aventurine"),
+    ("Burnice", "Caesar"),
+    ("FelysNeko", __elysia__)
+]
 
-return greeting;
+conversations = ""
+for (name, to) in people {
+    conversations += (talk(name, to) + "\\n")
+}
+
+return conversations
 `;
 
-export const author = `return __author__;`;
+export const elysia = `// The motivation is of this entire project is to create a language where 
+// Elysia exists, so regardless of how this project evolves in the future,
+// there must exist a built-in identifier named \`__elysia__\`.
+
+name = ("爱莉希雅", "Elysia")
+nickname = __elysia__
+birthday = "Nov. 11th"
+
+return (name, nickname, birthday)
+`;
+
+export const author = `return __author__`;
