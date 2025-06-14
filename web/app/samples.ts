@@ -40,4 +40,7 @@ birthday = "Nov. 11th"
 return (name, nickname, birthday)
 `;
 
+export const playground = `// Here's your playground
+`;
+
 export const author = `return __author__`;
